@@ -36,6 +36,10 @@ public class ToDoListController {
 
         ToDoList todo = toDoListMap.get(id);
 
+        if(todo==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity<>(new ToDoListResponseDto(todo), HttpStatus.OK);
     }
 
@@ -53,11 +57,19 @@ public class ToDoListController {
 
     //투두리스트 수정
     @PutMapping("/{id}")
-    public ResponseEntity<ToDoListResponseDto> updateMemoById(@PathVariable Long id, @RequestBody ToDoListRequestDto requestDto) {
+    public ResponseEntity<ToDoListResponseDto> updateTodoById(@PathVariable Long id, @RequestBody ToDoListRequestDto requestDto) {
+
 
         ToDoList todo = toDoListMap.get(id);
+        if(todo==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
 
-        if (requestDto.passwordValidate(requestDto)) {
+        if(todo.getTitle()==null||todo.getContents()==null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (todo.passwordValidate(requestDto.getPassword())) {
             todo.update(requestDto);
         } else {
             //업데이트 실패 로그 출력, 클라이언트에게도 출력 해줘야함.
@@ -65,6 +77,16 @@ public class ToDoListController {
 
         return new ResponseEntity<>(new ToDoListResponseDto(todo), HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ToDoListResponseDto> deleteToDoList(@PathVariable Long id,@RequestBody String password) {
+        //비밀번호 검증 로직 생각할 필요가 있는듯.
+        if(toDoListMap.containsKey(id)||password.equals(toDoListMap.get(id).getPassword())) {
+            toDoListMap.remove(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
