@@ -47,12 +47,12 @@ public class jdbcTmplateTodoRepository implements ToDoRepository{
 
     @Override
     public List<ToDoListResponseDto> findAllToDo() {
-        return jdbcTemplate.query("select * from todolist", todoRowMapperResp());
+        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc", todoRowMapperResp());
     }
 
     @Override
     public ToDoList findToDoById(Long id) {
-        List<ToDoList> result = jdbcTemplate.query("select * from todolist where LIST_ID = ? order by modify_date desc, list_id desc", todoRowMapper(),id);
+        List<ToDoList> result = jdbcTemplate.query("select * from todolist where LIST_ID = ?", todoRowMapper(),id);
         return result.stream().findAny().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id));
     }
 
