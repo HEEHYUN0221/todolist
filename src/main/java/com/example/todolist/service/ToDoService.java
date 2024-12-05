@@ -12,7 +12,7 @@ public interface ToDoService {
 
     ToDoListResponseDto findToDoById(Long id);
 
-    ToDoListResponseDto updateToDo(Long id,String password, String title, String contents);
+    ToDoListResponseDto updateToDo(Long id,String userId, String password, String name,String contents);
 
-    void deleteToDo(Long id, String password);
+    void deleteToDo(Long id,String userId, String password);
 }
