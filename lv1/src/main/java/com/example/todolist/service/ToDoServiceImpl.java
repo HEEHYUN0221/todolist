@@ -59,7 +59,7 @@ public class ToDoServiceImpl implements ToDoService{
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No data has been modified");
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"user_id, password not matched");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"user_id, password not matched");
         }
 
         return new ToDoListResponseDto(todo);
