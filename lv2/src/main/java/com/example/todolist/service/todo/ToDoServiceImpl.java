@@ -56,12 +56,12 @@ public class ToDoServiceImpl implements ToDoService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"required value.");
         }
 
-        //패스워드 검증, 검증하려면 db에서 패스워드 빼와야해 그럼 find해서 가져와
+        //패스워드 검증, 검증하려면 db에서 패스워드 빼와야
 
         //이제 패스워드를 유저테이블에서 가져올거... 이 게시글을 작성한 유저의 정보를 가져와야함. 패스워드정보만?
         ToDoList todo = toDoRepository.findToDoById(id);
         if(todo.getUserId().equals(userId)){
-            int updateRow = toDoRepository.updateTodo(id,name,contents, LocalDate.now());
+            int updateRow = toDoRepository.updateTodo(id,userId,name,contents, LocalDate.now());
             todo = toDoRepository.findToDoById(id);
             if(updateRow==0){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No data has been modified");

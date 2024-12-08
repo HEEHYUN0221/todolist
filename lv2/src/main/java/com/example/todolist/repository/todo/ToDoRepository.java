@@ -17,7 +17,7 @@ public interface ToDoRepository {
 
     ToDoList findToDoById(Long id);
 
-    int updateTodo(Long id, String name, String contents, LocalDate modifyDate);
+    int updateTodo(Long id,Long userId, String name, String contents, LocalDate modifyDate);
 
     void deleteToDo(Long id);
 }

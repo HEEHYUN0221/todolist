@@ -63,7 +63,8 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
     }
 
     @Override
-    public int updateTodo(Long id, String name, String contents, LocalDate modifyDate) {
+    public int updateTodo(Long id, Long userID, String name, String contents, LocalDate modifyDate) {
+        jdbcTemplate.update("update user set LAST_MODIFY_DATE = ? where USER_ID = ?", modifyDate, userID);
         return jdbcTemplate.update("update todolist set user_name = ?, contents = ?, MODIFY_DATE = ? where list_id = ?", name, contents, modifyDate, id);
     }
 
