@@ -1,4 +1,4 @@
-package com.example.todolist.dto;
+package com.example.todolist.dto.todolist.response;
 
 import com.example.todolist.entity.ToDoList;
 import lombok.AllArgsConstructor;
@@ -8,15 +8,17 @@ import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
-public class ToDoListResponseDto {
+public class ToDoListCreateResponseDto {
     Long id;
+    Long userId;
     String title;
     String contents;
     String name;
     LocalDate date;
     LocalDate modify_date;
 
-    public ToDoListResponseDto(ToDoList todo) {
+    public ToDoListCreateResponseDto(ToDoList todo) {
+        this.userId=todo.getUserId();
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();

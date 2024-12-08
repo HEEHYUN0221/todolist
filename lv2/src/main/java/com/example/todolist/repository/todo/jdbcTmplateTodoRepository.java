@@ -1,6 +1,7 @@
-package com.example.todolist.repository;
+package com.example.todolist.repository.todo;
 
-import com.example.todolist.dto.ToDoListResponseDto;
+import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
+import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
 import com.example.todolist.entity.ToDoList;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class jdbcTmplateTodoRepository implements ToDoRepository{
+public class jdbcTmplateTodoRepository implements ToDoRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -27,7 +28,7 @@ public class jdbcTmplateTodoRepository implements ToDoRepository{
 
 
     @Override
-    public ToDoListResponseDto saveToDo(ToDoList todo) {
+    public ToDoListCreateResponseDto saveToDo(ToDoList todo) {
         SimpleJdbcInsert jdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
         jdbcInsert.withTableName("todolist").usingGeneratedKeyColumns("list_id");
 
@@ -42,12 +43,17 @@ public class jdbcTmplateTodoRepository implements ToDoRepository{
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        return new ToDoListResponseDto(key.longValue(),todo.getTitle(),todo.getContents(),todo.getName(),todo.getDate(),todo.getModifyDate());
+        return new ToDoListCreateResponseDto(key.longValue(),todo.getUserId(),todo.getTitle(),todo.getContents(),todo.getName(),todo.getDate(),todo.getModifyDate());
     }
 
     @Override
-    public List<ToDoListResponseDto> findAllToDo() {
+    public List<ToDoListFindResponseDto> findAllToDo() {
         return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc", todoRowMapperResp());
+    }
+
+    @Override
+    public List<ToDoListFindResponseDto> findMyToDo(Long userId) {
+        return jdbcTemplate.query("select * from todolist t join user u on t.USER_ID=u.USER_ID where u.USER_ID = ? order by t.modify_date desc, t.list_id desc", todoRowMapperResp(), userId);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class jdbcTmplateTodoRepository implements ToDoRepository{
                 return new ToDoList(
                         rs.getString("user_name"),
                         rs.getLong("list_id"),
-                        rs.getString("user_id"),
+                        rs.getLong("user_id"),
                         rs.getString("title"),
                         rs.getString("contents"),
                         modifyDate,
@@ -90,15 +96,15 @@ public class jdbcTmplateTodoRepository implements ToDoRepository{
         };
     }
 
-    private RowMapper<ToDoListResponseDto> todoRowMapperResp() {
-        return new RowMapper<ToDoListResponseDto>() {
+    private RowMapper<ToDoListFindResponseDto> todoRowMapperResp() {
+        return new RowMapper<ToDoListFindResponseDto>() {
             @Override
-            public ToDoListResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            public ToDoListFindResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
                 LocalDate modifyDate = rs.getDate("modify_date").toLocalDate();
                 LocalDate createDate = rs.getDate("create_date").toLocalDate();
 
-                return new ToDoListResponseDto(
+                return new ToDoListFindResponseDto(
                         rs.getLong("list_id"),
                         rs.getString("title"),
                         rs.getString("contents"),
