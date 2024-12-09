@@ -5,9 +5,13 @@
 유저를 생성, 조회, 수정, 삭제할 수 있고 유저별 할일 조회가 가능합니다.
 
 관련하여 고민했던 내용들은 블로그에 남겨두었습니다.
+
 [필수 구현부 TIL 보러가기](https://heehyun0221.tistory.com/94)
+
 [Lv3 전 리팩토링 TIL 보러가기](https://heehyun0221.tistory.com/96)
+
 [Lv3 api 명세서]()
+
 
 <details>
   <summary> Lv1 + Lv2 투두리스트 만들기 </summary>
@@ -16,7 +20,7 @@
  
   요구사항 : 일정 생성, 조회, 수정, 삭제 기능 구현.
 
-  
+  ![todolistLv1_api](https://github.com/user-attachments/assets/9a08a839-9949-460a-8ecf-a70ac3e50474)
 
   
   
