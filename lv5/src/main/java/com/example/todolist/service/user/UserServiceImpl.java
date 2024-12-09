@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService{
         if(requestDto.getUserName()==null|requestDto.getEmail()==null) {
             throw new InvalidInputException("name or email required");
         }
+        if(!userEmailValidate(requestDto.getEmail())){
+            throw new InvalidInputException("email form \"xxx@xxxx.xxx\"");
+        }
         User user = new User(requestDto.getUserName(), requestDto.getEmail());
         user.setRegistDate(LocalDate.now());
         return userRepository.createUser(user);
@@ -58,7 +61,10 @@ public class UserServiceImpl implements UserService{
         userRepository.deleteUser(userId);
     }
 
-
+    private boolean userEmailValidate(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        return email.matches(emailRegex);
+    }
 
 
 
