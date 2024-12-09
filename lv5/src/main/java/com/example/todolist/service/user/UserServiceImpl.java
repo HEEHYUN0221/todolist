@@ -45,6 +45,10 @@ public class UserServiceImpl implements UserService{
             throw new InvalidInputException("required value.");
         }
 
+        if(!userEmailValidate(requestDto.getEmail())){
+            throw new InvalidInputException("email form \"xxx@xxxx.xxx\"");
+        }
+
         int updateRow = userRepository.updateUser(userId,requestDto.getUserName(), requestDto.getEmail());
 
         if(updateRow==0){
