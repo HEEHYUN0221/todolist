@@ -62,7 +62,7 @@ public class ToDoServiceImpl implements ToDoService {
     public ToDoListFindResponseDto updateToDo(Long id, Long userId, String password, String name, String contents) {
 
         //필수 입력값 null 검증
-        if(id==null||userId==null|password==null|name==null||contents==null) {
+        if(id==null||userId==null||password==null||name==null||contents==null) {
             throw new InvalidInputException("required value.");
         }
 
@@ -86,9 +86,13 @@ public class ToDoServiceImpl implements ToDoService {
     public void deleteToDo(Long id,Long userId, String password) {
         ToDoList todo = toDoRepository.findToDoById(id);
 
+        if(todo==null){
+            throw new InvalidInputException("Does not exist id = " + id);
+        }
         if(todo.getUserId()==null) {
             throw new InvalidInputException("Does not exist id = " + id);
         }
+
         if(!todo.getPassword().equals(password)||!todo.getUserId().equals(userId)){
             throw new InvalidAccessException("user_id, password not matched");
         }
