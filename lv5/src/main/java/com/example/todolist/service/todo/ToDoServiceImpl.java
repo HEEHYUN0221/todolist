@@ -28,6 +28,12 @@ public class ToDoServiceImpl implements ToDoService {
         if(requestDto.getUserId()==null||requestDto.getPassword()==null||requestDto.getName()==null||requestDto.getTitle()==null||requestDto.getContents()==null){
             throw new InvalidInputException("InvalidInputException");
         }
+
+        if(!contentsLimit(requestDto.getContents()))
+        {
+            throw new InvalidInputException("contents limit 200 length");
+        }
+
         ToDoList todo = new ToDoList(requestDto.getUserId(), requestDto.getPassword(), requestDto.getName(), requestDto.getTitle(), requestDto.getContents());
 
         return toDoRepository.saveToDo(todo);
@@ -89,6 +95,10 @@ public class ToDoServiceImpl implements ToDoService {
 
         toDoRepository.deleteToDo(id);
 
+    }
+
+    private boolean contentsLimit(String contents) {
+        return (contents.length()<200);
     }
 
 }
