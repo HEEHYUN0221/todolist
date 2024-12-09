@@ -22,19 +22,19 @@ public class UserController {
     //유저 생성
     @PostMapping
     public ResponseEntity<UserCreateResponseDto> createUser(@RequestBody UserCreateRequestDto requestDto) {
-        return new ResponseEntity<>(userService.createUser(requestDto),HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.createUser(requestDto), HttpStatus.CREATED);
     }
 
     //유저 조회
     @GetMapping("/{userId}")
     public ResponseEntity<UserFindResponseDto> findUser(@PathVariable Long userId) {
-        return new ResponseEntity<>(userService.findUser(userId),HttpStatus.OK);
+        return new ResponseEntity<>(userService.findUser(userId), HttpStatus.OK);
     }
 
     //유저 수정(이름, 이메일 정도?)
     @PatchMapping("/{userId}")
     public ResponseEntity<UserFindResponseDto> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto requestDto) {
-        return new ResponseEntity<>(userService.updateUser(userId,requestDto),HttpStatus.OK);
+        return new ResponseEntity<>(userService.updateUser(userId, requestDto), HttpStatus.OK);
     }
 
 

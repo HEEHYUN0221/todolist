@@ -27,7 +27,9 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public jdbcTmplateTodoRepository(DataSource dataSource) { this.jdbcTemplate=new JdbcTemplate(dataSource);}
+    public jdbcTmplateTodoRepository(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
 
     @Override
@@ -36,24 +38,24 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
         jdbcInsert.withTableName("todolist").usingGeneratedKeyColumns("list_id");
 
         Map<String, Object> parameters = new HashMap<>();
-        parameters.put("title",todo.getTitle());
-        parameters.put("contents",todo.getContents());
-        parameters.put("user_name",todo.getName());
-        parameters.put("user_id",todo.getUserId());
-        parameters.put("create_date",todo.getDate());
-        parameters.put("modify_date",todo.getModifyDate());
-        parameters.put("user_password",todo.getPassword());
+        parameters.put("title", todo.getTitle());
+        parameters.put("contents", todo.getContents());
+        parameters.put("user_name", todo.getName());
+        parameters.put("user_id", todo.getUserId());
+        parameters.put("create_date", todo.getDate());
+        parameters.put("modify_date", todo.getModifyDate());
+        parameters.put("user_password", todo.getPassword());
 
         Number key = jdbcInsert.executeAndReturnKey(new MapSqlParameterSource(parameters));
 
-        return new ToDoListCreateResponseDto(key.longValue(),todo.getUserId(),todo.getTitle(),todo.getContents(),todo.getName(),todo.getDate(),todo.getModifyDate());
+        return new ToDoListCreateResponseDto(key.longValue(), todo.getUserId(), todo.getTitle(), todo.getContents(), todo.getName(), todo.getDate(), todo.getModifyDate());
     }
 
     @Override
     public List<ToDoListFindResponseDto> findAllToDo(int pageNumber, int pageSize) {
 //        Pageable
 //        PageRequest
-        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc, list_id desc limit ? offset ?", todoRowMapperResp(),pageSize,(pageNumber-1)*pageSize);
+        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc, list_id desc limit ? offset ?", todoRowMapperResp(), pageSize, (pageNumber - 1) * pageSize);
     }
 
     @Override
@@ -63,8 +65,8 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
 
     @Override
     public ToDoList findToDoById(Long id) {
-        List<ToDoList> result = jdbcTemplate.query("select * from todolist where LIST_ID = ?", todoRowMapper(),id);
-        return result.stream().findAny().orElseThrow(()->new InvalidInputException("Invalid list ID"));
+        List<ToDoList> result = jdbcTemplate.query("select * from todolist where LIST_ID = ?", todoRowMapper(), id);
+        return result.stream().findAny().orElseThrow(() -> new InvalidInputException("Invalid list ID"));
     }
 
     @Override
@@ -79,13 +81,14 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
     }
 
 
-
     private RowMapper<ToDoList> todoRowMapper() {
         return new RowMapper<ToDoList>() {
             @Override
             public ToDoList mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-                if(rowNum==0){ throw new InvalidInputException("result empty");}
+                if (rowNum == 0) {
+                    throw new InvalidInputException("result empty");
+                }
 
                 LocalDate modifyDate = rs.getDate("modify_date").toLocalDate();
                 LocalDate createDate = rs.getDate("create_date").toLocalDate();
