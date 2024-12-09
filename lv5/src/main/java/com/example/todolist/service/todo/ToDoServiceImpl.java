@@ -1,5 +1,6 @@
 package com.example.todolist.service.todo;
 
+import com.example.todolist.Exception.DataNotModifyException;
 import com.example.todolist.Exception.IdValueNotFoundException;
 import com.example.todolist.Exception.InvalidAccessException;
 import com.example.todolist.Exception.InvalidInputException;
@@ -64,7 +65,7 @@ public class ToDoServiceImpl implements ToDoService {
         if(todo.getUserId().equals(userId)&&todo.getPassword().equals(password)){
             int updateRow = toDoRepository.updateTodo(id,userId,name,contents, LocalDate.now());
             if(updateRow==0){
-                throw new IdValueNotFoundException("list id 값 불일치");
+                throw new DataNotModifyException("No data has been modified");
             }
             todo = toDoRepository.findToDoById(id);
         } else {
@@ -79,7 +80,7 @@ public class ToDoServiceImpl implements ToDoService {
     public void deleteToDo(Long id,Long userId, String password) {
         ToDoList todo = toDoRepository.findToDoById(id);
 
-        if(todo==null) {
+        if(todo.getUserId()==null) {
             throw new InvalidInputException("Does not exist id = " + id);
         }
         if(!todo.getPassword().equals(password)||!todo.getUserId().equals(userId)){

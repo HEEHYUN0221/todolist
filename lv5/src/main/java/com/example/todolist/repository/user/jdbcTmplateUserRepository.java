@@ -1,5 +1,7 @@
 package com.example.todolist.repository.user;
 
+import com.example.todolist.Exception.IdValueNotFoundException;
+import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;
 import com.example.todolist.dto.user.response.UserFindResponseDto;
 import com.example.todolist.entity.User;
@@ -47,10 +49,7 @@ public class jdbcTmplateUserRepository implements UserRepository {
     @Override
     public UserFindResponseDto findUser(Long userId) {
         List<UserFindResponseDto> result = jdbcTemplate.query("select * from user where user_id = ?", userRowMapper(),userId);
-
-        System.out.println("Query Result: " + result);
-
-        return result.stream().findAny().orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + userId));
+        return result.stream().findAny().orElseThrow(()->new IdValueNotFoundException("Does not exist id = " + userId));
     }
 
     //유저 수정 Update
@@ -69,6 +68,7 @@ public class jdbcTmplateUserRepository implements UserRepository {
         return new RowMapper<UserFindResponseDto>() {
             @Override
             public UserFindResponseDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+
                 LocalDate registDate = rs.getDate("regist_date").toLocalDate();
                 LocalDate lastModifyDate = null;
                 if(rs.getDate("last_modify_date")!=null) {

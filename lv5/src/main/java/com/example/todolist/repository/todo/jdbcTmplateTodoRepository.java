@@ -1,5 +1,6 @@
 package com.example.todolist.repository.todo;
 
+import com.example.todolist.Exception.IdValueNotFoundException;
 import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
@@ -66,7 +67,7 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
     @Override
     public ToDoList findToDoById(Long id) {
         List<ToDoList> result = jdbcTemplate.query("select * from todolist where LIST_ID = ?", todoRowMapper(), id);
-        return result.stream().findAny().orElseThrow(() -> new InvalidInputException("Invalid list ID"));
+        return result.stream().findAny().orElseThrow(() -> new IdValueNotFoundException("Invalid list ID"));
     }
 
     @Override
@@ -85,10 +86,6 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
         return new RowMapper<ToDoList>() {
             @Override
             public ToDoList mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-                if (rowNum == 0) {
-                    throw new InvalidInputException("result empty");
-                }
 
                 LocalDate modifyDate = rs.getDate("modify_date").toLocalDate();
                 LocalDate createDate = rs.getDate("create_date").toLocalDate();
