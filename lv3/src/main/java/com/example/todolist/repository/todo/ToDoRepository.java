@@ -11,7 +11,7 @@ public interface ToDoRepository {
 
     ToDoListCreateResponseDto saveToDo(ToDoList todo);
 
-    List<ToDoListFindResponseDto> findAllToDo(int pageNumber, int pageSize);
+    List<ToDoListFindResponseDto> findAllToDo();
 
     List<ToDoListFindResponseDto> findMyToDo(Long userId);
 

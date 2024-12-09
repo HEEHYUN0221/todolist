@@ -1,7 +1,5 @@
 package com.example.todolist.service.todo;
 
-import com.example.todolist.Exception.InvalidInputException;
-import com.example.todolist.Exception.MismatchRequestValueException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
@@ -23,17 +21,13 @@ public class ToDoServiceImpl implements ToDoService {
 
     @Override
     public ToDoListCreateResponseDto saveToDo(ToDoListCreateRequestDto requestDto) {
-        if(requestDto.getUserId()==null||requestDto.getPassword()==null||requestDto.getName()==null||requestDto.getTitle()==null||requestDto.getContents()==null){
-            throw new InvalidInputException("InvalidInputException");
-        }
         ToDoList todo = new ToDoList(requestDto.getUserId(), requestDto.getPassword(), requestDto.getName(), requestDto.getTitle(), requestDto.getContents());
-
         return toDoRepository.saveToDo(todo);
     }
 
     @Override
-    public List<ToDoListFindResponseDto> findAllTodo(int pageNumber, int pageSize) {
-        return toDoRepository.findAllToDo(pageNumber,pageSize);
+    public List<ToDoListFindResponseDto> findAllTodo() {
+        return toDoRepository.findAllToDo();
     }
 
     //지정 유저의 아이디만 찾기, 매개변수 필요. request에 user_id(식별자)만 받아올지?
@@ -47,7 +41,7 @@ public class ToDoServiceImpl implements ToDoService {
         ToDoList todo = toDoRepository.findToDoById(id);
 
         if(todo==null) {
-            throw new MismatchRequestValueException("mismatch id : " + id);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,"Does not exist id = " + id);
         }
 
         return new ToDoListFindResponseDto(todo);
@@ -57,21 +51,23 @@ public class ToDoServiceImpl implements ToDoService {
     @Override
     public ToDoListFindResponseDto updateToDo(Long id, Long userId, String password, String name, String contents) {
 
-        //필수 입력값 null 검증
+        //입력값 검증
         if(id==null||name==null||contents==null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"required value.");
         }
 
-        //유저 id와 password가 맞는지 확인.
+        //패스워드 검증, 검증하려면 db에서 패스워드 빼와야
+
+        //이제 패스워드를 유저테이블에서 가져올거... 이 게시글을 작성한 유저의 정보를 가져와야함. 패스워드정보만?
         ToDoList todo = toDoRepository.findToDoById(id);
-        if(todo.getUserId().equals(userId)&&todo.getPassword().equals(password)){
+        if(todo.getUserId().equals(userId)){
             int updateRow = toDoRepository.updateTodo(id,userId,name,contents, LocalDate.now());
             todo = toDoRepository.findToDoById(id);
             if(updateRow==0){
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND,"No data has been modified");
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"user_id, password not matched");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"user_id not matched");
         }
 
         return new ToDoListFindResponseDto(todo);

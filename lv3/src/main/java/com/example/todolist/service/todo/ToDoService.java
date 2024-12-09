@@ -9,7 +9,7 @@ import java.util.List;
 public interface ToDoService {
     ToDoListCreateResponseDto saveToDo(ToDoListCreateRequestDto requestDto);
 
-    List<ToDoListFindResponseDto> findAllTodo(int pageNumber, int pageSize);
+    List<ToDoListFindResponseDto> findAllTodo();
 
     List<ToDoListFindResponseDto> findMyTodo(Long userId);
 

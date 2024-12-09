@@ -1,5 +1,7 @@
 package com.example.todolist.controller.todo;
 
+import com.example.todolist.Exception.InvalidInputException;
+import com.example.todolist.Exception.MismatchRequestValueException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
 import com.example.todolist.dto.todolist.request.ToDoListDeleteRequestDto;
 import com.example.todolist.dto.todolist.request.ToDoListUpdateRequestDto;
@@ -23,11 +25,13 @@ public class ToDoListController {
         this.toDoService=toDoService;
     }
 
-    // 투두리스트 생성
+     //투두리스트 생성
     @PostMapping
     public ResponseEntity<ToDoListCreateResponseDto> createToDoList(@RequestBody ToDoListCreateRequestDto requestDto) {
         return new ResponseEntity<>(toDoService.saveToDo(requestDto), HttpStatus.CREATED);
     }
+
+
 
     //투두리스트 단건 조회
     @GetMapping("/{id}")
@@ -37,8 +41,8 @@ public class ToDoListController {
 
     //투두리스트 전체 조회
     @GetMapping
-    public ResponseEntity<List<ToDoListFindResponseDto>> findAllToDoList() {
-        return new ResponseEntity<>(toDoService.findAllTodo(),HttpStatus.OK);
+    public ResponseEntity<List<ToDoListFindResponseDto>> findAllToDoList(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(toDoService.findAllTodo(pageNumber,pageSize),HttpStatus.OK);
     }
     
     //투두리스트 나의 것만 조회
@@ -59,6 +63,18 @@ public class ToDoListController {
        toDoService.deleteToDo(id, requestDto.getUserId(),requestDto.getPassword());
        return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    //예회처리
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MismatchRequestValueException.class)
+    public ResponseEntity<String> handleMismatchRequestValueException(MismatchRequestValueException e) {
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+    }
+
 
 
 }

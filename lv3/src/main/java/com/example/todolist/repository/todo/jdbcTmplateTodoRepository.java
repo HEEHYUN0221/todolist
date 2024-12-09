@@ -3,8 +3,6 @@ package com.example.todolist.repository.todo;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
 import com.example.todolist.entity.ToDoList;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -49,10 +47,8 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
     }
 
     @Override
-    public List<ToDoListFindResponseDto> findAllToDo(int pageNumber, int pageSize) {
-//        Pageable
-//        PageRequest
-        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc, list_id desc limit ? offset ?", todoRowMapperResp(),pageSize,(pageNumber-1)*pageSize);
+    public List<ToDoListFindResponseDto> findAllToDo() {
+        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc", todoRowMapperResp());
     }
 
     @Override
