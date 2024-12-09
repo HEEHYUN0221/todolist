@@ -52,7 +52,7 @@
 
   ### 2. 두번째 투두리스트 앱 
 
-  [Lv3 코드 보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv2)
+  [Lv3 코드 보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv3)
 
   요구사항 : '작성자' 추가
 
@@ -93,7 +93,7 @@
 
   ### 3. 세번째 투두리스트 앱
 
-  [Lv4 코드보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv3)
+  [Lv4 코드보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv4)
 
   요구사항 : 페이지네이션
 
