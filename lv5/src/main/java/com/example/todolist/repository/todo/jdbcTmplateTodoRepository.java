@@ -50,16 +50,9 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
 
     @Override
     public List<ToDoListFindResponseDto> findAllToDo(int pageNumber, int pageSize) {
-
-        String checkIndexSql = "show index from todolist where Key_name='idx_covering_todolist'";
-        if(jdbcTemplate.queryForList(checkIndexSql).isEmpty()) {
-            jdbcTemplate.execute("CREATE INDEX idx_covering_todolist ON todolist (modify_date DESC, list_id DESC)");
-        }
-
-        String sql = "SELECT * FROM todolist WHERE (modify_date < ? OR (modify_date = ? AND list_id < ?)) ORDER BY modify_date DESC, list_id DESC LIMIT ?";
-
-
-        return jdbcTemplate.query(sql, todoRowMapperResp(),(pageNumber-1)*pageSize, pageSize);
+//        Pageable
+//        PageRequest
+        return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc, list_id desc limit ? offset ?", todoRowMapperResp(),pageSize,(pageNumber-1)*pageSize);
     }
 
     @Override
