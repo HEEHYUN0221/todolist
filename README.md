@@ -10,13 +10,17 @@
 
 [Lv3 전 리팩토링 TIL 보러가기](https://heehyun0221.tistory.com/96)
 
-[Lv3 api 명세서]()
+[Lv4 페이지네이션 TIL 보러가기]()
+
+[Lv5 예외발생처리 TIL 보러가기]()
 
 
 <details>
   <summary> Lv1 + Lv2 투두리스트 만들기 </summary>
   
    ### 1. 첫번째 투두리스트 앱
+
+   [Lv1+Lv2 코드보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv1)
  
   요구사항 : 일정 생성, 조회, 수정, 삭제 기능 구현.
 
@@ -47,6 +51,8 @@
   <summary> Lv3 투두리스트 만들기 </summary>
 
   ### 2. 두번째 투두리스트 앱 
+
+  [Lv3 코드 보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv2)
 
   요구사항 : '작성자' 추가
 
@@ -79,4 +85,27 @@
 
 
   
+</details>
+
+<details>
+  
+  <summary> Lv4 투두리스트 만들기 </summary>
+
+  ### 3. 세번째 투두리스트 앱
+
+  [Lv4 코드보러가기](https://github.com/HEEHYUN0221/todolist/tree/main/lv3)
+
+  요구사항 : 페이지네이션
+
+  수정된 기능
+  
+  1. 투두리스트 전체 조회 : 전체 조회 시 페이지 번호와 페이지 사이즈를 받아서 원하는 갯수만큼 출력할 수 있도록 수정했습니다. 만약 원하는 갯수와 페이지 번호가 없을 시엔 맨 처음 페이지에 5개가 출력됩니다.
+
+  [Lv4-2 코드보러가기]() -- 미완료된 코드입니다.
+
+  수정된 기능
+
+  1. 투두리스트 전체 조회 : 기존 Lv4 코드에는 sql문에 offset이 적용되어있습니다. 해당 sql문은 offset값이 커질수록 성능저하가 발생할 가능성이 있기에 수정되었습니다.
+
+     
 </details>
