@@ -41,8 +41,8 @@ public class ToDoListController {
 
     //투두리스트 전체 조회
     @GetMapping
-    public ResponseEntity<List<ToDoListFindResponseDto>> findAllToDoList() {
-        return new ResponseEntity<>(toDoService.findAllTodo(),HttpStatus.OK);
+    public ResponseEntity<List<ToDoListFindResponseDto>> findAllToDoList(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "5") int pageSize) {
+        return new ResponseEntity<>(toDoService.findAllTodo(pageNumber,pageSize),HttpStatus.OK);
     }
     
     //투두리스트 나의 것만 조회

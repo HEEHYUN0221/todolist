@@ -49,9 +49,7 @@ public class jdbcTmplateTodoRepository implements ToDoRepository {
     }
 
     @Override
-    public List<ToDoListFindResponseDto> findAllToDo() {
-        int pageNumber = 3;
-        int pageSize = 5;
+    public List<ToDoListFindResponseDto> findAllToDo(int pageNumber, int pageSize) {
 //        Pageable
 //        PageRequest
         return jdbcTemplate.query("select * from todolist order by modify_date desc, list_id desc, list_id desc limit ? offset ?", todoRowMapperResp(),pageSize,(pageNumber-1)*pageSize);

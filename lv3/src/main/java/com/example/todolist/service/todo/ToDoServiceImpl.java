@@ -32,8 +32,8 @@ public class ToDoServiceImpl implements ToDoService {
     }
 
     @Override
-    public List<ToDoListFindResponseDto> findAllTodo() {
-        return toDoRepository.findAllToDo();
+    public List<ToDoListFindResponseDto> findAllTodo(int pageNumber, int pageSize) {
+        return toDoRepository.findAllToDo(pageNumber,pageSize);
     }
 
     //지정 유저의 아이디만 찾기, 매개변수 필요. request에 user_id(식별자)만 받아올지?
