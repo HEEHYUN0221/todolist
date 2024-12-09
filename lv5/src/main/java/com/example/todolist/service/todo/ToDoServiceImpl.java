@@ -1,5 +1,6 @@
 package com.example.todolist.service.todo;
 
+import com.example.todolist.Exception.IdValueNotFoundException;
 import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.Exception.MismatchRequestValueException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
@@ -39,7 +40,11 @@ public class ToDoServiceImpl implements ToDoService {
     //지정 유저의 아이디만 찾기, 매개변수 필요. request에 user_id(식별자)만 받아올지?
     @Override
     public List<ToDoListFindResponseDto> findMyTodo(Long userId) {
-        return toDoRepository.findMyToDo(userId);
+        List<ToDoListFindResponseDto> todol = toDoRepository.findMyToDo(userId);
+        if(todol.isEmpty()){
+            throw new IdValueNotFoundException("mismatch userId : " + userId);
+        }
+        return todol;
     }
 
     @Override

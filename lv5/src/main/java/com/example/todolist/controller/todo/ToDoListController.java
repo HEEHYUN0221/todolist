@@ -1,9 +1,8 @@
 package com.example.todolist.controller.todo;
 
 import com.example.todolist.Exception.InvalidInputException;
-import com.example.todolist.Exception.MismatchRequestValueException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
-import com.example.todolist.dto.todolist.request.ToDoListDeleteRequestDto;
+
 import com.example.todolist.dto.todolist.request.ToDoListUpdateRequestDto;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
@@ -28,7 +27,8 @@ public class ToDoListController {
      //투두리스트 생성
     @PostMapping
     public ResponseEntity<ToDoListCreateResponseDto> createToDoList(@RequestBody ToDoListCreateRequestDto requestDto) {
-        return new ResponseEntity<>(toDoService.saveToDo(requestDto), HttpStatus.CREATED);
+            return new ResponseEntity<>(toDoService.saveToDo(requestDto), HttpStatus.CREATED);
+
     }
 
 
@@ -59,20 +59,9 @@ public class ToDoListController {
 
     //투두리스트 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<ToDoListCreateResponseDto> deleteToDoList(@PathVariable Long id, @RequestBody ToDoListDeleteRequestDto requestDto) {
-       toDoService.deleteToDo(id, requestDto.getUserId(),requestDto.getPassword());
+    public ResponseEntity<ToDoListCreateResponseDto> deleteToDoList(@PathVariable Long id, @RequestParam Long userId, @RequestParam String password) {
+       toDoService.deleteToDo(id, userId,password);
        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    //예회처리
-    @ExceptionHandler(InvalidInputException.class)
-    public ResponseEntity<String> handleInvalidInputException(InvalidInputException e) {
-        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MismatchRequestValueException.class)
-    public ResponseEntity<String> handleMismatchRequestValueException(MismatchRequestValueException e) {
-        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
     }
 
 
