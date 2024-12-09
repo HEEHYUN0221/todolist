@@ -17,12 +17,12 @@ public class ToDoList {
     LocalDate modifyDate;
     String password;
 
-    public ToDoList(Long userId,String password,String name, String title, String contents) {
-        this.userId=userId;
+    public ToDoList(Long userId, String password, String name, String title, String contents) {
+        this.userId = userId;
         this.name = name;
         this.contents = contents;
         this.title = title;
-        this.password=password;
+        this.password = password;
         date = LocalDate.now();
         modifyDate = LocalDate.now();
     }

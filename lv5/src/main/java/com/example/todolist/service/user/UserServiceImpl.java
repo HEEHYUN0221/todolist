@@ -8,25 +8,25 @@ import com.example.todolist.dto.user.response.UserCreateResponseDto;
 import com.example.todolist.dto.user.response.UserFindResponseDto;
 import com.example.todolist.entity.User;
 import com.example.todolist.repository.user.UserRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {this.userRepository=userRepository;}
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override//유저 생성 Create
     public UserCreateResponseDto createUser(UserCreateRequestDto requestDto) {
-        if(requestDto.getUserName()==null|requestDto.getEmail()==null) {
+        if (requestDto.getUserName() == null | requestDto.getEmail() == null) {
             throw new InvalidInputException("name or email required");
         }
-        if(!userEmailValidate(requestDto.getEmail())){
+        if (!userEmailValidate(requestDto.getEmail())) {
             throw new InvalidInputException("email form \"xxx@xxxx.xxx\"");
         }
         User user = new User(requestDto.getUserName(), requestDto.getEmail());
@@ -41,17 +41,17 @@ public class UserServiceImpl implements UserService{
 
     @Override //유저 수정 Update
     public UserFindResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto) {
-        if((requestDto.getUserName()==null)||(requestDto.getEmail()==null)) {
+        if ((requestDto.getUserName() == null) || (requestDto.getEmail() == null)) {
             throw new InvalidInputException("required value.");
         }
 
-        if(!userEmailValidate(requestDto.getEmail())){
+        if (!userEmailValidate(requestDto.getEmail())) {
             throw new InvalidInputException("email form \"xxx@xxxx.xxx\"");
         }
 
-        int updateRow = userRepository.updateUser(userId,requestDto.getUserName(), requestDto.getEmail());
+        int updateRow = userRepository.updateUser(userId, requestDto.getUserName(), requestDto.getEmail());
 
-        if(updateRow==0){
+        if (updateRow == 0) {
             throw new DataNotModifyException("No data has been modified");
         }
 

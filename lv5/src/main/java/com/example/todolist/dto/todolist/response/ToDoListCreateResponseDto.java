@@ -18,13 +18,13 @@ public class ToDoListCreateResponseDto {
     LocalDate modify_date;
 
     public ToDoListCreateResponseDto(ToDoList todo) {
-        this.userId=todo.getUserId();
+        this.userId = todo.getUserId();
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
         this.name = todo.getName();
         this.date = todo.getDate();
-        this.modify_date=todo.getModifyDate();
+        this.modify_date = todo.getModifyDate();
     }
 
 }

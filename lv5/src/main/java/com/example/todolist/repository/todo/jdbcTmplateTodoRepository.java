@@ -1,19 +1,15 @@
 package com.example.todolist.repository.todo;
 
 import com.example.todolist.Exception.IdValueNotFoundException;
-import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
 import com.example.todolist.entity.ToDoList;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import javax.sql.DataSource;
 import java.sql.ResultSet;

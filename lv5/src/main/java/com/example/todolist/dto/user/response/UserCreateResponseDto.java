@@ -16,10 +16,10 @@ public class UserCreateResponseDto {
     LocalDate registDate;
 
     public UserCreateResponseDto(User user) {
-        this.userId=user.getUserId();
-        this.userName=user.getUserName();
-        this.email=user.getEmail();
-        this.registDate=user.getRegistDate();
+        this.userId = user.getUserId();
+        this.userName = user.getUserName();
+        this.email = user.getEmail();
+        this.registDate = user.getRegistDate();
     }
 
 }

@@ -15,7 +15,7 @@ public interface ToDoService {
 
     ToDoListFindResponseDto findToDoById(Long id);
 
-    ToDoListFindResponseDto updateToDo(Long id, Long userId,String password, String name, String contents);
+    ToDoListFindResponseDto updateToDo(Long id, Long userId, String password, String name, String contents);
 
-    void deleteToDo(Long id,Long userId, String password);
+    void deleteToDo(Long id, Long userId, String password);
 }

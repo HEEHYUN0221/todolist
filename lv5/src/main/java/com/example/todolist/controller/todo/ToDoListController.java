@@ -1,8 +1,6 @@
 package com.example.todolist.controller.todo;
 
-import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
-
 import com.example.todolist.dto.todolist.request.ToDoListUpdateRequestDto;
 import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
 import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;

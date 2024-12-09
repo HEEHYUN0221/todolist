@@ -22,7 +22,7 @@ public class ToDoListFindResponseDto {
         this.contents = todo.getContents();
         this.name = todo.getName();
         this.date = todo.getDate();
-        this.modify_date=todo.getModifyDate();
+        this.modify_date = todo.getModifyDate();
     }
 
 }

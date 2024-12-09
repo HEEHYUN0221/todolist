@@ -15,12 +15,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<String> handleMissingPatchVariableException(MissingPathVariableException e) {
-        return new ResponseEntity<>("url 파라미터 값 부족 : " + e.getMessage(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("url 파라미터 값 부족 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<String> handleMissingServletRequestParameterException(MissingServletRequestParameterException e) {
-        return new ResponseEntity<>("요구 파라미터 부족 : " + e.getMessage(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("요구 파라미터 부족 : " + e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidInputException.class)
