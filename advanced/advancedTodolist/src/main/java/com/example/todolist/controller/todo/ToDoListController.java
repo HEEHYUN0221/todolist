@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -36,8 +37,13 @@ public class ToDoListController {
         return new ResponseEntity<>(toDoService.findToDoById(id), HttpStatus.OK);
     }
 
-    //투두리스트 전체 조회
     @GetMapping
+    public ResponseEntity<List<ToDoListFindResponseDto>> findToDoListNameUpdateDate(@RequestParam String name, @RequestParam LocalDate modifyDate) {
+        return new ResponseEntity<>(toDoService.findToDoListNameUpdateDate(name, modifyDate),HttpStatus.OK);
+    }
+
+    //투두리스트 전체 조회
+    @GetMapping("/all")
     public ResponseEntity<List<ToDoListFindResponseDto>> findAllToDoList(@RequestParam(defaultValue = "1") int pageNumber, @RequestParam(defaultValue = "5") int pageSize) {
         return new ResponseEntity<>(toDoService.findAllTodo(pageNumber, pageSize), HttpStatus.OK);
     }
