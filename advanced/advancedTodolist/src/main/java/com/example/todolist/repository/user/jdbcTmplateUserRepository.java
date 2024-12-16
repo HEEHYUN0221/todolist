@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class jdbcTmplateUserRepository implements UserRepository {
+public class jdbcTmplateUserRepository implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -83,6 +83,5 @@ public class jdbcTmplateUserRepository implements UserRepository {
             }
         };
     }
-
 
 }

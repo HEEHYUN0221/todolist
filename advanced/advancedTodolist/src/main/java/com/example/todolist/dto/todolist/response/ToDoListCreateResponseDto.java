@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ToDoListCreateResponseDto {
     Long id;
-    Long userId;
     String title;
     String contents;
     String name;
@@ -19,13 +18,12 @@ public class ToDoListCreateResponseDto {
     LocalDateTime modify_date;
 
     public ToDoListCreateResponseDto(ToDoList todo) {
-        this.userId = todo.getUserId();
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
         this.name = todo.getName();
-        this.date = todo.getDate();
-        this.modify_date = todo.getModifyDate();
+        this.date = todo.getCreatedAt();
+        this.modify_date = todo.getLastModifiedAt();
     }
 
 }

@@ -22,8 +22,8 @@ public class ToDoListFindResponseDto {
         this.title = todo.getTitle();
         this.contents = todo.getContents();
         this.name = todo.getName();
-        this.date = todo.getDate();
-        this.modify_date = todo.getModifyDate();
+        this.date = todo.getCreatedAt();
+        this.modify_date = todo.getLastModifiedAt();
     }
 
 }
