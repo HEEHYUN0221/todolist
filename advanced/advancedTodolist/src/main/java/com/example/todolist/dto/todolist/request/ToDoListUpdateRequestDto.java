@@ -10,8 +10,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ToDoListUpdateRequestDto {
 
-    @NotBlank(message = "이름은 필수값입니다.")
-    private String name;
+    @NotBlank(message = "유저아이디는 필수입니다.")
+    private Long userId;
+
+    private String title;
 
     @NotBlank(message = "내용은 필수입니다.")
     @Size(max = 200, message = "내용은 200글자 이내여야 합니다.")

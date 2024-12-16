@@ -56,10 +56,10 @@ public class ToDoListController {
         return new ResponseEntity<>(toDoService.findMyTodo(userId), HttpStatus.OK);
     }
 
-    //투두리스트 수정
+//    투두리스트 수정 > lv2 이름
     @PatchMapping("/{id}")
     public ResponseEntity<ToDoListFindResponseDto> updateTodoById(@PathVariable Long id, @RequestBody ToDoListUpdateRequestDto requestDto) {
-        return new ResponseEntity<>(toDoService.updateToDo(id, requestDto.getName(), requestDto.getContents()), HttpStatus.OK);
+        return new ResponseEntity<>(toDoService.updateToDo(id, requestDto.getUserId(), requestDto.getTitle(), requestDto.getContents()), HttpStatus.OK);
     }
 
     //투두리스트 삭제

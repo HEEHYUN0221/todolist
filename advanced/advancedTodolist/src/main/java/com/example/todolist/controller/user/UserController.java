@@ -31,7 +31,7 @@ public class UserController {
         return new ResponseEntity<>(userService.findUser(userId), HttpStatus.OK);
     }
 
-    //유저 수정(이름, 이메일 정도?)
+    //유저 수정(이름, 이메일)
     @PatchMapping("/{userId}")
     public ResponseEntity<UserFindResponseDto> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto requestDto) {
         return new ResponseEntity<>(userService.updateUser(userId, requestDto), HttpStatus.OK);

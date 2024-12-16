@@ -12,15 +12,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class UserCreateResponseDto {
     Long userId;
-    String userName;
     String email;
-    LocalDateTime registDate;
+    LocalDateTime createdAt;
 
     public UserCreateResponseDto(User user) {
-        this.userId = user.getUserId();
-        this.userName = user.getUserName();
+        this.userId = user.getId();
         this.email = user.getEmail();
-        this.registDate = user.getRegistDate();
+        this.createdAt = user.getCreatedAt();
     }
 
 }

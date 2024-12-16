@@ -1,31 +1,38 @@
 package com.example.todolist.entity;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class User {
-    @Setter
-    Long userId;
-    String userName;
-    String email;
-    @Setter
-    LocalDateTime registDate;
-    LocalDateTime lastModifyDate;
+@Entity
+@Table(name = "user")
+public class User extends BaseTime{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; //유저 식별자
 
-    public User(String user_name, String email, LocalDateTime registDate) {
-        this.userName = user_name;
-        this.email = email;
-        this.registDate = registDate;
+    @Setter
+    @Column(nullable = false,unique = true)
+    private String userName;
+
+    @Setter
+    @Column(unique = true)
+    private String email;
+
+    @Setter
+    @Column
+    private LocalDateTime lastModifyToDoList;
+
+    public User() {
     }
 
-    public User(String user_name, String email) {
-        this.userName = user_name;
+    public User(String userName, String email) {
+        this.userName = userName;
         this.email = email;
     }
 }

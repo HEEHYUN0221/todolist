@@ -10,8 +10,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ToDoListCreateRequestDto {
 
-    @NotBlank(message = "이름은 필수값입니다.")
-    private String name;
+    @NotNull(message = "유저아이디는 필수값입니다.")
+    private Long userId;
 
     @NotBlank(message = "제목은 필수값입니다.")
     private String title;
