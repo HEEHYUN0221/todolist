@@ -13,7 +13,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.example.todolist.repository.todo.ToDoRepository;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -94,9 +93,10 @@ public class ToDoServiceImpl implements ToDoService {
         if(!Objects.equals(user.getId(), userId)){
             throw new InvalidAccessException("userId가 일치하지 않습니다.");
         }
+        toDoRepository.saveAndFlush(todo);
         user.setLastModifyToDoList(todo.getLastModifiedAt());
         todo.setUser(user);
-        return new ToDoListFindResponseDto(toDoRepository.save(todo));
+        return new ToDoListFindResponseDto(todo);
     }
 
     @Transactional
