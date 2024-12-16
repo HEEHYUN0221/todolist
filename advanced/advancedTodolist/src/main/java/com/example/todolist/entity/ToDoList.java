@@ -1,31 +1,38 @@
 package com.example.todolist.entity;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
-public class ToDoList {
-    String name;
-    Long id;//게시글 식별자
-    Long userId;//유저 식별자
-    String title;
-    String contents;
-    LocalDateTime date;
-    LocalDateTime modifyDate;
-    String password;
+@Entity
+@Table
+public class ToDoList extends BaseTime {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public ToDoList(Long userId, String password, String name, String title, String contents) {
-        this.userId = userId;
-        this.name = name;
-        this.contents = contents;
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @Setter
+    @Column(nullable = false)
+    private String title;
+
+    @Setter
+    @Column(nullable = false, length = 200)
+    private String contents;
+
+
+    public ToDoList() {
+    }
+
+    public ToDoList(String title, String contents) {
         this.title = title;
-        this.password = password;
-        date = LocalDateTime.now();
-        modifyDate = LocalDateTime.now();
+        this.contents = contents;
     }
 
 }

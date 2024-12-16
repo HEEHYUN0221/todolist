@@ -4,7 +4,6 @@ import com.example.todolist.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,15 +12,13 @@ public class UserFindResponseDto {
     Long userId;
     String userName;
     String email;
-    LocalDateTime registDate;
-    LocalDateTime lastModifyDate;
+    LocalDateTime modifyDate;
 
     public UserFindResponseDto(User user) {
-        this.userId = user.getUserId();
+        this.userId = user.getId();
         this.userName = user.getUserName();
         this.email = user.getEmail();
-        this.registDate = user.getRegistDate();
-        this.lastModifyDate = user.getLastModifyDate();
+        this.modifyDate=user.getLastModifyToDoList();
     }
 }
 

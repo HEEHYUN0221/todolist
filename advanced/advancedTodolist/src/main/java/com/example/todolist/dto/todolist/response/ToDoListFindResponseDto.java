@@ -4,7 +4,6 @@ import com.example.todolist.entity.ToDoList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,7 +12,7 @@ public class ToDoListFindResponseDto {
     Long id;
     String title;
     String contents;
-    String name;
+    Long userId;
     LocalDateTime date;
     LocalDateTime modify_date;
 
@@ -21,9 +20,19 @@ public class ToDoListFindResponseDto {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
-        this.name = todo.getName();
-        this.date = todo.getDate();
-        this.modify_date = todo.getModifyDate();
+        this.userId = todo.getUser().getId();
+        this.date = todo.getCreatedAt();
+        this.modify_date = todo.getLastModifiedAt();
     }
 
+    public static ToDoListFindResponseDto toDto(ToDoList todo) {
+        return new ToDoListFindResponseDto(
+                todo.getId(),
+                todo.getTitle(),
+                todo.getContents(),
+                todo.getUser().getId(),
+                todo.getCreatedAt(),
+                todo.getLastModifiedAt()
+        );
+    }
 }
