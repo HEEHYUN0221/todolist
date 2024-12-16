@@ -3,6 +3,7 @@ package com.example.todolist.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -17,12 +18,14 @@ public class ToDoList extends BaseTime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Setter
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String title;
 
+    @Setter
     @Column(nullable = false, length = 200)
     private String contents;
 

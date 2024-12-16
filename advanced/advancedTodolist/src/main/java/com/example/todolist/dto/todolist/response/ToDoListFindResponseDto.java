@@ -26,4 +26,14 @@ public class ToDoListFindResponseDto {
         this.modify_date = todo.getLastModifiedAt();
     }
 
+    public static ToDoListFindResponseDto toDto(ToDoList todo) {
+        return new ToDoListFindResponseDto(
+                todo.getId(),
+                todo.getTitle(),
+                todo.getContents(),
+                todo.getName(),
+                todo.getCreatedAt(),
+                todo.getLastModifiedAt()
+        );
+    }
 }
