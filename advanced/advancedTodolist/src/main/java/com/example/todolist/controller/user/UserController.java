@@ -5,19 +5,17 @@ import com.example.todolist.dto.user.request.UserUpdateRequestDto;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;
 import com.example.todolist.dto.user.response.UserFindResponseDto;
 import com.example.todolist.service.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     //유저 생성
     @PostMapping

@@ -25,6 +25,10 @@ public class User extends BaseTime{
     private String email;
 
     @Setter
+    @Column(nullable = false)
+    private String password;
+
+    @Setter
     @Column
     private LocalDateTime lastModifyToDoList;
 
