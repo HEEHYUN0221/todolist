@@ -47,10 +47,15 @@ public class ToDoServiceImpl implements ToDoService {
     @Override
     public List<ToDoListAllFindResponseDto> findAllTodo(Pageable pageable) {
 
-    return toDoRepository.findAll(pageable)
-            .stream()
-            .map(ToDoListAllFindResponseDto::toDto)
-            .toList();
+        return toDoRepository.findByUserSignStatusTrue(pageable)
+                .stream()
+                .map(ToDoListAllFindResponseDto::toDto)
+                .toList();
+
+//    return toDoRepository.findAll(pageable)
+//            .stream()
+//            .map(ToDoListAllFindResponseDto::toDto)
+//            .toList();
     }
 
     @Override

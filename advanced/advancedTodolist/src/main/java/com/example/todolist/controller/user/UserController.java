@@ -4,10 +4,7 @@ import com.example.todolist.common.Const;
 import com.example.todolist.common.session.LoginUserSession;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
-import com.example.todolist.dto.user.response.UserCreateResponseDto;
-import com.example.todolist.dto.user.response.UserDeleteResponseDto;
-import com.example.todolist.dto.user.response.UserFindResponseDto;
-import com.example.todolist.dto.user.response.UserUpdateResponseDto;
+import com.example.todolist.dto.user.response.*;
 import com.example.todolist.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -56,6 +53,15 @@ public class UserController {
         session.invalidate();
 
         return new ResponseEntity<>(deleteUser,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/my-info/withdrawal")
+    public ResponseEntity<UserWithdrawalResponseDto> withdrawalUser(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        LoginUserSession user = (LoginUserSession) session.getAttribute(Const.LOGIN_USER);
+
+        return new ResponseEntity<>(userService.withdrawalUser(user.getUser().getId()),HttpStatus.OK);
     }
 
 

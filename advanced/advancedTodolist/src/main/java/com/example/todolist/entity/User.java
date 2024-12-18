@@ -33,6 +33,10 @@ public class User extends BaseTime {
     @Column
     private LocalDateTime lastModifyToDoList;
 
+    @Setter
+    @Column
+    private boolean signStatus;
+
     public User() {
     }
 

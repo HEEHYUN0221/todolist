@@ -3,10 +3,7 @@ package com.example.todolist.service.user;
 import com.example.todolist.config.PasswordEncoder;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
-import com.example.todolist.dto.user.response.UserCreateResponseDto;
-import com.example.todolist.dto.user.response.UserDeleteResponseDto;
-import com.example.todolist.dto.user.response.UserFindResponseDto;
-import com.example.todolist.dto.user.response.UserUpdateResponseDto;
+import com.example.todolist.dto.user.response.*;
 import com.example.todolist.entity.User;
 import com.example.todolist.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -29,6 +26,9 @@ public class UserServiceImpl implements UserService {
                 requestDto.getEmail(),
                 encodedPassword
         );
+
+        saveUser.setSignStatus(true);
+
         userRepository.save(saveUser);
 
         saveUser = userRepository.findByIdOrElseThrow(saveUser.getId());
@@ -57,6 +57,15 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByIdOrElseThrow(userId);
         userRepository.delete(user);
         return new UserDeleteResponseDto(user);
+    }
+
+    @Override
+    @Transactional
+    public UserWithdrawalResponseDto withdrawalUser(Long userId) {
+
+        User user = userRepository.findByIdOrElseThrow(userId);
+        user.setSignStatus(false);
+        return new UserWithdrawalResponseDto();
     }
 
 

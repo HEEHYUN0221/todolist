@@ -2,10 +2,7 @@ package com.example.todolist.service.user;
 
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
-import com.example.todolist.dto.user.response.UserCreateResponseDto;
-import com.example.todolist.dto.user.response.UserDeleteResponseDto;
-import com.example.todolist.dto.user.response.UserFindResponseDto;
-import com.example.todolist.dto.user.response.UserUpdateResponseDto;
+import com.example.todolist.dto.user.response.*;
 
 public interface UserService {
 
@@ -20,4 +17,6 @@ public interface UserService {
 
     //유저 삭제
     UserDeleteResponseDto deleteUser(Long userId);
+
+    UserWithdrawalResponseDto withdrawalUser(Long userId);
 }
