@@ -35,7 +35,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidAccessException.class)
     public ResponseEntity<String> handleInvalidAccessException(InvalidAccessException e) {
-        return new ResponseEntity<>("잘못된 접근 : " + e.getMessage(), HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("잘못된 접근 : " + e.getMessage(), HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(DataNotModifyException.class)

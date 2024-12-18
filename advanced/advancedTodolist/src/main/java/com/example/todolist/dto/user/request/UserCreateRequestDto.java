@@ -14,9 +14,13 @@ public class UserCreateRequestDto {
     @Email
     String email;
 
-    public UserCreateRequestDto(String userName, String email) {
+    @NotBlank
+    String password;
+
+    public UserCreateRequestDto(String userName, String email, String password) {
         this.userName = userName;
         this.email = email;
+        this.password=password;
     }
 }
 

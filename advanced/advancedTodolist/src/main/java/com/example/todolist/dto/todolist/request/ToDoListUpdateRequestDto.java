@@ -9,9 +9,6 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ToDoListUpdateRequestDto {
 
-    @NotBlank(message = "유저아이디는 필수입니다.")
-    private Long userId;
-
     private String title;
 
     @NotBlank(message = "내용은 필수입니다.")

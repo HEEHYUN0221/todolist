@@ -1,22 +1,22 @@
 package com.example.todolist.dto.user.response;
 
 import com.example.todolist.entity.User;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
-public class UserFindResponseDto {
+public class UserUpdateResponseDto {
+
+    public static final String UPDATE_SUCCESS = "업데이트 성공";
     String userName;
     String email;
-    LocalDateTime modifyDate;
 
-    public UserFindResponseDto(User user) {
+    public UserUpdateResponseDto(User user) {
         this.userName = user.getUserName();
         this.email = user.getEmail();
-        this.modifyDate=user.getLastModifyToDoList();
+    }
+
+    public String getUpdateSuccess() {
+        return UPDATE_SUCCESS;
     }
 }
-

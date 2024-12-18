@@ -3,11 +3,14 @@ package com.example.todolist.dto.todolist.response;
 import com.example.todolist.entity.Todolist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class ToDoListCreateResponseDto {
+public class ToDoListUpdateResponseDto {
+
+    public static final String UPDATE_SUCCESS = "업데이트 성공";
     Long id;
     String title;
     String contents;
@@ -15,7 +18,7 @@ public class ToDoListCreateResponseDto {
     LocalDateTime date;
     LocalDateTime modify_date;
 
-    public ToDoListCreateResponseDto(Todolist todo) {
+    public ToDoListUpdateResponseDto(Todolist todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
@@ -24,5 +27,8 @@ public class ToDoListCreateResponseDto {
         this.modify_date = todo.getLastModifiedAt();
     }
 
+    public String getUpdateSuccess() {
+        return UPDATE_SUCCESS;
+    }
 
 }

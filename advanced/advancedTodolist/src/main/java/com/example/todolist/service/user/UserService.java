@@ -3,7 +3,9 @@ package com.example.todolist.service.user;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;
+import com.example.todolist.dto.user.response.UserDeleteResponseDto;
 import com.example.todolist.dto.user.response.UserFindResponseDto;
+import com.example.todolist.dto.user.response.UserUpdateResponseDto;
 
 public interface UserService {
 
@@ -14,8 +16,8 @@ public interface UserService {
     UserFindResponseDto findUser(Long userId);
 
     //유저 수정
-    UserFindResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto);
+    UserUpdateResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto);
 
     //유저 삭제
-    void deleteUser(Long userId);
+    UserDeleteResponseDto deleteUser(Long userId);
 }

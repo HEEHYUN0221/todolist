@@ -1,33 +1,33 @@
 package com.example.todolist.service.user;
 
-import com.example.todolist.Exception.DataNotModifyException;
-import com.example.todolist.Exception.InvalidInputException;
+import com.example.todolist.config.PasswordEncoder;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;
+import com.example.todolist.dto.user.response.UserDeleteResponseDto;
 import com.example.todolist.dto.user.response.UserFindResponseDto;
+import com.example.todolist.dto.user.response.UserUpdateResponseDto;
 import com.example.todolist.entity.User;
 import com.example.todolist.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @Override//유저 생성 Create
     public UserCreateResponseDto createUser(UserCreateRequestDto requestDto) {
+
+        String encodedPassword = PasswordEncoder.encode(requestDto.getPassword());
+
         User saveUser = new User(
                 requestDto.getUserName(),
-                requestDto.getEmail()
+                requestDto.getEmail(),
+                encodedPassword
         );
         userRepository.save(saveUser);
 
@@ -44,18 +44,19 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override //유저 수정 Update
-    public UserFindResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto) {
+    public UserUpdateResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto) {
         User user = userRepository.findByIdOrElseThrow(userId);
         user.setUserName(requestDto.getUserName());
         user.setEmail(requestDto.getEmail());
-        return new UserFindResponseDto(user);
+        return new UserUpdateResponseDto(user);
     }
 
     @Transactional
     @Override//유저 삭제 Delete
-    public void deleteUser(Long userId) {
+    public UserDeleteResponseDto deleteUser(Long userId) {
         User user = userRepository.findByIdOrElseThrow(userId);
         userRepository.delete(user);
+        return new UserDeleteResponseDto(user);
     }
 
 
