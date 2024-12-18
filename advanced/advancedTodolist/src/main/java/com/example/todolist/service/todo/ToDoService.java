@@ -2,6 +2,7 @@ package com.example.todolist.service.todo;
 
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
 import com.example.todolist.dto.todolist.response.*;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public interface ToDoService {
     ToDoListCreateResponseDto saveToDo(ToDoListCreateRequestDto requestDto, Long userId);
 
-    List<ToDoListAllFindResponseDto> findAllTodo();
+    List<ToDoListAllFindResponseDto> findAllTodo(Pageable pageable);
 
     List<ToDoListMineFindResponseDto> findMyTodo(Long userId);
 

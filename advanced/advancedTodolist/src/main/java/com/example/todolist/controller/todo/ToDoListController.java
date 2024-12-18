@@ -9,6 +9,8 @@ import com.example.todolist.service.todo.ToDoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +53,10 @@ public class ToDoListController {
         return new ResponseEntity<>(toDoService.findToDoListNameUpdateDate(name, modifyDate), HttpStatus.OK);
     }
 
-    //투두리스트 전체 조회 - Lv8에서 페이징 수정 예정.
+    //투두리스트 전체 조회
     @GetMapping("/all")
-    public ResponseEntity<List<ToDoListAllFindResponseDto>> findAllToDoList() {
-        return new ResponseEntity<>(toDoService.findAllTodo(), HttpStatus.OK);
+    public ResponseEntity<List<ToDoListAllFindResponseDto>> findAllToDoList(@PageableDefault(size = 5) Pageable pageable) {
+        return new ResponseEntity<>(toDoService.findAllTodo(pageable), HttpStatus.OK);
     }
 
     //투두리스트 나의 것만 조회

@@ -10,6 +10,7 @@ import com.example.todolist.entity.User;
 import com.example.todolist.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.todolist.repository.todo.ToDoRepository;
 import java.time.LocalDate;
@@ -44,8 +45,9 @@ public class ToDoServiceImpl implements ToDoService {
 
     //투두리스트 전체 조회
     @Override
-    public List<ToDoListAllFindResponseDto> findAllTodo() {
-    return toDoRepository.findAll()
+    public List<ToDoListAllFindResponseDto> findAllTodo(Pageable pageable) {
+
+    return toDoRepository.findAll(pageable)
             .stream()
             .map(ToDoListAllFindResponseDto::toDto)
             .toList();
