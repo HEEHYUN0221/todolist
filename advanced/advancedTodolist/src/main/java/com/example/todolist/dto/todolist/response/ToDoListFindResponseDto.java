@@ -1,6 +1,6 @@
 package com.example.todolist.dto.todolist.response;
 
-import com.example.todolist.entity.ToDoList;
+import com.example.todolist.entity.Todolist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -16,7 +16,7 @@ public class ToDoListFindResponseDto {
     LocalDateTime date;
     LocalDateTime modify_date;
 
-    public ToDoListFindResponseDto(ToDoList todo) {
+    public ToDoListFindResponseDto(Todolist todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
@@ -25,7 +25,7 @@ public class ToDoListFindResponseDto {
         this.modify_date = todo.getLastModifiedAt();
     }
 
-    public static ToDoListFindResponseDto toDto(ToDoList todo) {
+    public static ToDoListFindResponseDto toDto(Todolist todo) {
         return new ToDoListFindResponseDto(
                 todo.getId(),
                 todo.getTitle(),

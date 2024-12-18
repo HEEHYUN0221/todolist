@@ -2,41 +2,37 @@ package com.example.todolist.entity;
 
 import com.example.todolist.entity.base.BaseTime;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-
+@AllArgsConstructor
 @Getter
 @Entity
-@Table
-public class Todolist extends BaseTime {
+@Table(name = "comment")
+public class Comment extends BaseTime {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Setter
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "todolist_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private Todolist toDoList;
 
     @Setter
-    @Column(nullable = false)
-    private String title;
-
-    @Setter
-    @Column(nullable = false, length = 200)
+    @Column(nullable = false, length = 50)
     private String contents;
 
-
-    public Todolist() {
+    public Comment() {
     }
 
-    public Todolist(String title, String contents) {
-        this.title = title;
+    public Comment(Todolist toDoList, String contents) {
+        this.toDoList = toDoList;
         this.contents = contents;
     }
-
 }

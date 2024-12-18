@@ -3,7 +3,7 @@ package com.example.todolist.controller;
 import com.example.todolist.common.Const;
 import com.example.todolist.dto.user.login.LoginRequestDto;
 import com.example.todolist.dto.user.login.LoginResponseDto;
-import com.example.todolist.dto.user.login.LoginUserSession;
+import com.example.todolist.common.session.LoginUserSession;
 import com.example.todolist.dto.user.login.LogoutResponseDto;
 import com.example.todolist.service.LoginService;
 import jakarta.servlet.http.HttpServletRequest;

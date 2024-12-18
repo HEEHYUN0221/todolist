@@ -1,4 +1,4 @@
-package com.example.todolist.dto.user.login;
+package com.example.todolist.common.session;
 
 import com.example.todolist.entity.User;
 import lombok.AllArgsConstructor;

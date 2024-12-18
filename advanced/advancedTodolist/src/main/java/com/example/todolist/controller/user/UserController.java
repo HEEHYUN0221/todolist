@@ -1,7 +1,7 @@
 package com.example.todolist.controller.user;
 
 import com.example.todolist.common.Const;
-import com.example.todolist.dto.user.login.LoginUserSession;
+import com.example.todolist.common.session.LoginUserSession;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;

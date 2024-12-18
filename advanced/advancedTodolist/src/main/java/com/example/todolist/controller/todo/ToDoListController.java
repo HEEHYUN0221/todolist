@@ -4,7 +4,7 @@ import com.example.todolist.common.Const;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
 import com.example.todolist.dto.todolist.request.ToDoListUpdateRequestDto;
 import com.example.todolist.dto.todolist.response.*;
-import com.example.todolist.dto.user.login.LoginUserSession;
+import com.example.todolist.common.session.LoginUserSession;
 import com.example.todolist.service.todo.ToDoService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

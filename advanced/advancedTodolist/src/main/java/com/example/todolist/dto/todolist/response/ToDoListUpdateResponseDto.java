@@ -1,6 +1,6 @@
 package com.example.todolist.dto.todolist.response;
 
-import com.example.todolist.entity.ToDoList;
+import com.example.todolist.entity.Todolist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -18,7 +18,7 @@ public class ToDoListUpdateResponseDto {
     LocalDateTime date;
     LocalDateTime modify_date;
 
-    public ToDoListUpdateResponseDto(ToDoList todo) {
+    public ToDoListUpdateResponseDto(Todolist todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();

@@ -5,7 +5,7 @@ package com.example.todolist.service.todo;
 import com.example.todolist.Exception.InvalidAccessException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
 import com.example.todolist.dto.todolist.response.*;
-import com.example.todolist.entity.ToDoList;
+import com.example.todolist.entity.Todolist;
 import com.example.todolist.entity.User;
 import com.example.todolist.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -31,7 +31,7 @@ public class ToDoServiceImpl implements ToDoService {
 
         User user = userRepository.findByIdOrElseThrow(userId);
 
-        ToDoList saveToDo = new ToDoList(
+        Todolist saveToDo = new Todolist(
                 requestDto.getTitle(),
                 requestDto.getContents()
         );
@@ -86,7 +86,7 @@ public class ToDoServiceImpl implements ToDoService {
     @Transactional
     @Override
     public ToDoListUpdateResponseDto updateToDo(Long id, Long userId, String title, String contents) {
-        ToDoList todo = toDoRepository.findByIdOrElseThrow(id);
+        Todolist todo = toDoRepository.findByIdOrElseThrow(id);
         todo.setTitle(title);
         todo.setContents(contents);
         User user = todo.getUser();
@@ -102,7 +102,7 @@ public class ToDoServiceImpl implements ToDoService {
     @Transactional
     @Override
     public ToDoListDeleteResponseDto deleteToDo(Long id, Long userId) {
-        ToDoList todo = toDoRepository.findByIdOrElseThrow(id);
+        Todolist todo = toDoRepository.findByIdOrElseThrow(id);
         if(!todo.getUser().getId().equals(userId)){
             throw new InvalidAccessException("userId가 일치하지 않습니다.");
         }

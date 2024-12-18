@@ -1,8 +1,6 @@
 package com.example.todolist.service.user;
 
-import com.example.todolist.Exception.DataNotModifyException;
-import com.example.todolist.Exception.InvalidInputException;
-import com.example.todolist.config.PassswordEncoder;
+import com.example.todolist.config.PasswordEncoder;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
 import com.example.todolist.dto.user.response.UserCreateResponseDto;
@@ -15,20 +13,16 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PassswordEncoder passswordEncoder;
 
     @Override//유저 생성 Create
     public UserCreateResponseDto createUser(UserCreateRequestDto requestDto) {
 
-        String encodedPassword = passswordEncoder.encode(requestDto.getPassword());
+        String encodedPassword = PasswordEncoder.encode(requestDto.getPassword());
 
         User saveUser = new User(
                 requestDto.getUserName(),

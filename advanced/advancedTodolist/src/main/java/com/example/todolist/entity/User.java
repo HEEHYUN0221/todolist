@@ -1,5 +1,6 @@
 package com.example.todolist.entity;
 
+import com.example.todolist.entity.base.BaseTime;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Entity
 @Table(name = "user")
-public class User extends BaseTime{
+public class User extends BaseTime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; //유저 식별자
