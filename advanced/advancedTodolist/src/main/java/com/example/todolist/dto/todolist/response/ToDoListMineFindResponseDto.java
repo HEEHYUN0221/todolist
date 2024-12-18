@@ -3,12 +3,11 @@ package com.example.todolist.dto.todolist.response;
 import com.example.todolist.entity.ToDoList;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class ToDoListFindResponseDto {
+public class ToDoListMineFindResponseDto {
     Long id;
     String title;
     String contents;
@@ -16,7 +15,7 @@ public class ToDoListFindResponseDto {
     LocalDateTime date;
     LocalDateTime modify_date;
 
-    public ToDoListFindResponseDto(ToDoList todo) {
+    public ToDoListMineFindResponseDto(ToDoList todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
@@ -25,8 +24,8 @@ public class ToDoListFindResponseDto {
         this.modify_date = todo.getLastModifiedAt();
     }
 
-    public static ToDoListFindResponseDto toDto(ToDoList todo) {
-        return new ToDoListFindResponseDto(
+    public static ToDoListMineFindResponseDto toDto(ToDoList todo) {
+        return new ToDoListMineFindResponseDto(
                 todo.getId(),
                 todo.getTitle(),
                 todo.getContents(),

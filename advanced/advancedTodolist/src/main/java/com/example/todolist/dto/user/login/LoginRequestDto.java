@@ -1,4 +1,4 @@
-package com.example.todolist.dto.login;
+package com.example.todolist.dto.user.login;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

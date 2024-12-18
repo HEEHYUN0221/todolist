@@ -3,6 +3,8 @@ package com.example.todolist.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 
 @Getter
@@ -16,6 +18,7 @@ public class ToDoList extends BaseTime {
     @Setter
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     @Setter

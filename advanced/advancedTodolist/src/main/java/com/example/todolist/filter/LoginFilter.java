@@ -37,12 +37,12 @@ public class LoginFilter implements Filter{
                 return;
             }
 
-            //쿠키로 구현한 부분
+//            쿠키로 구현한 부분
 //            Cookie[] cookies = httpRequest.getCookies();
 //            if(cookies==null){
 //                httpResponse.sendError(HttpStatus.UNAUTHORIZED.value(),"로그인 필요");
 //                return;
-////                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다.");
+//
 //            }
 //            boolean used = false;
 //            for(Cookie cookie : cookies) {

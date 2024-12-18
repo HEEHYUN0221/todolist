@@ -5,13 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @AllArgsConstructor
 public class ToDoListCreateRequestDto {
-
-    @NotNull(message = "유저아이디는 필수값입니다.")
-    private Long userId;
 
     @NotBlank(message = "제목은 필수값입니다.")
     private String title;

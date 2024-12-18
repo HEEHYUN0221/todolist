@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-public class ToDoListFindResponseDto {
+public class ToDoListUpdateResponseDto {
+
+    public static final String UPDATE_SUCCESS = "업데이트 성공";
     Long id;
     String title;
     String contents;
@@ -16,7 +18,7 @@ public class ToDoListFindResponseDto {
     LocalDateTime date;
     LocalDateTime modify_date;
 
-    public ToDoListFindResponseDto(ToDoList todo) {
+    public ToDoListUpdateResponseDto(ToDoList todo) {
         this.id = todo.getId();
         this.title = todo.getTitle();
         this.contents = todo.getContents();
@@ -25,14 +27,8 @@ public class ToDoListFindResponseDto {
         this.modify_date = todo.getLastModifiedAt();
     }
 
-    public static ToDoListFindResponseDto toDto(ToDoList todo) {
-        return new ToDoListFindResponseDto(
-                todo.getId(),
-                todo.getTitle(),
-                todo.getContents(),
-                todo.getUser().getUserName(),
-                todo.getCreatedAt(),
-                todo.getLastModifiedAt()
-        );
+    public String getUpdateSuccess() {
+        return UPDATE_SUCCESS;
     }
+
 }
