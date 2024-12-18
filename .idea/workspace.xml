@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0a311578-f920-4334-a6de-76ea8b78b67c" name="변경" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced/advancedTodolist/src/main/java/com/example/todolist/ToDoListApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/advanced/advancedTodolist/src/main/java/com/example/todolist/ToDoListApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/advanced/advancedTodolist/src/main/java/com/example/todolist/entity/ToDoListLv1.java" beforeDir="false" afterPath="$PROJECT_DIR$/advanced/advancedTodolist/src/main/java/com/example/todolist/entity/ToDoListLv1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,7 +53,7 @@
     "Spring Boot.ToDoListApplication.executor": "Run",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/asw03/IdeaProjects/spring_saprta/ToDoList/lv2",
+    "last_opened_file_path": "C:/Users/asw03/IdeaProjects/spring_saprta/ToDoList/advanced/advancedTodolist",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -102,6 +103,7 @@
       <workItem from="1733401727063" duration="875000" />
       <workItem from="1733446613918" duration="429000" />
       <workItem from="1733447081725" duration="26000" />
+      <workItem from="1734312449831" duration="391000" />
     </task>
     <servers />
   </component>

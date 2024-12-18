@@ -1,112 +1,118 @@
 package com.example.todolist.service.todo;
 
-import com.example.todolist.Exception.DataNotModifyException;
+
+
 import com.example.todolist.Exception.InvalidAccessException;
-import com.example.todolist.Exception.InvalidInputException;
 import com.example.todolist.dto.todolist.request.ToDoListCreateRequestDto;
-import com.example.todolist.dto.todolist.response.ToDoListCreateResponseDto;
-import com.example.todolist.dto.todolist.response.ToDoListFindResponseDto;
-import com.example.todolist.entity.ToDoList;
+import com.example.todolist.dto.todolist.response.*;
+import com.example.todolist.entity.Todolist;
+import com.example.todolist.entity.User;
+import com.example.todolist.repository.user.UserRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.todolist.repository.todo.ToDoRepository;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 @Service
+@RequiredArgsConstructor
 public class ToDoServiceImpl implements ToDoService {
 
     private final ToDoRepository toDoRepository;
+    private final UserRepository userRepository;
 
-    public ToDoServiceImpl(ToDoRepository toDoRepository) {
-        this.toDoRepository = toDoRepository;
+    //투두리스트 저장
+    @Override
+    public ToDoListCreateResponseDto saveToDo(ToDoListCreateRequestDto requestDto,Long userId) {
+
+        User user = userRepository.findByIdOrElseThrow(userId);
+
+        Todolist saveToDo = new Todolist(
+                requestDto.getTitle(),
+                requestDto.getContents()
+        );
+
+        saveToDo.setUser(user);
+
+        toDoRepository.save(saveToDo);
+
+        return new ToDoListCreateResponseDto(toDoRepository.findByIdOrElseThrow(saveToDo.getId()));
     }
 
+    //투두리스트 전체 조회
     @Override
-    public ToDoListCreateResponseDto saveToDo(ToDoListCreateRequestDto requestDto) {
-        if (requestDto.getUserId() == null || requestDto.getPassword() == null || requestDto.getName() == null || requestDto.getTitle() == null || requestDto.getContents() == null) {
-            throw new InvalidInputException("InvalidInputException");
-        }
+    public List<ToDoListAllFindResponseDto> findAllTodo(Pageable pageable) {
 
-        if (!contentsLimit(requestDto.getContents())) {
-            throw new InvalidInputException("contents limit 200 length");
-        }
+        return toDoRepository.findByUserSignStatusTrue(pageable)
+                .stream()
+                .map(ToDoListAllFindResponseDto::toDto)
+                .toList();
 
-        ToDoList todo = new ToDoList(requestDto.getUserId(), requestDto.getPassword(), requestDto.getName(), requestDto.getTitle(), requestDto.getContents());
-
-        return toDoRepository.saveToDo(todo);
-    }
-
-    @Override
-    public List<ToDoListFindResponseDto> findAllTodo(int pageNumber, int pageSize) {
-        return toDoRepository.findAllToDo(pageNumber, pageSize);
+//    return toDoRepository.findAll(pageable)
+//            .stream()
+//            .map(ToDoListAllFindResponseDto::toDto)
+//            .toList();
     }
 
     @Override
     public List<ToDoListFindResponseDto> findToDoListNameUpdateDate(String name, LocalDate modifyDate) {
-        return toDoRepository.findToDoListNameUpdateDate(name,modifyDate);
+
+        LocalDateTime startday = modifyDate.atStartOfDay();
+        LocalDateTime endday = modifyDate.atTime(23,59,59);
+
+        User findUser = userRepository.findUserByUserName(name);
+
+        return toDoRepository.findAllByUserIdAndLastModifiedAtBetween(findUser.getId(), startday,endday)
+                .stream()
+                .map(ToDoListFindResponseDto::toDto)
+                .toList();
     }
 
 
     @Override
-    public List<ToDoListFindResponseDto> findMyTodo(Long userId) {
-        List<ToDoListFindResponseDto> todol = toDoRepository.findMyToDo(userId);
-        return todol;
+    public List<ToDoListMineFindResponseDto> findMyTodo(Long userId) {
+
+        User findUser = userRepository.findByIdOrElseThrow(userId);
+
+        return toDoRepository.findAllByUserId(findUser.getId()).stream().map(ToDoListMineFindResponseDto::toDto).toList();
+
     }
 
     @Override
     public ToDoListFindResponseDto findToDoById(Long id) {
-        ToDoList todo = toDoRepository.findToDoById(id);
-        return new ToDoListFindResponseDto(todo);
+        return new ToDoListFindResponseDto(toDoRepository.findByIdOrElseThrow(id));
     }
 
 
+    @Transactional
     @Override
-    public ToDoListFindResponseDto updateToDo(Long id, Long userId, String password, String name, String contents) {
-
-        //필수 입력값 null 검증
-        if (id == null || userId == null || password == null || name == null || contents == null) {
-            throw new InvalidInputException("required value.");
+    public ToDoListUpdateResponseDto updateToDo(Long id, Long userId, String title, String contents) {
+        Todolist todo = toDoRepository.findByIdOrElseThrow(id);
+        todo.setTitle(title);
+        todo.setContents(contents);
+        User user = todo.getUser();
+        if(!user.getId().equals(userId)){
+            throw new InvalidAccessException("userId가 일치하지 않습니다.");
         }
-
-        //유저 id와 password가 맞는지 확인.
-        ToDoList todo = toDoRepository.findToDoById(id);
-        if (todo.getUserId().equals(userId) && todo.getPassword().equals(password)) {
-            int updateRow = toDoRepository.updateTodo(id, userId, name, contents, LocalDateTime.now());
-            if (updateRow == 0) {
-                throw new DataNotModifyException("No data has been modified");
-            }
-            todo = toDoRepository.findToDoById(id);
-        } else {
-            throw new InvalidAccessException("user_id, password not matched");
-        }
-
-        return new ToDoListFindResponseDto(todo);
-
+        toDoRepository.saveAndFlush(todo);
+        user.setLastModifyToDoList(todo.getLastModifiedAt());
+        todo.setUser(user);
+        return new ToDoListUpdateResponseDto(todo);
     }
 
+    @Transactional
     @Override
-    public void deleteToDo(Long id, Long userId, String password) {
-        ToDoList todo = toDoRepository.findToDoById(id);
-
-        if (todo == null) {
-            throw new InvalidInputException("Does not exist id = " + id);
+    public ToDoListDeleteResponseDto deleteToDo(Long id, Long userId) {
+        Todolist todo = toDoRepository.findByIdOrElseThrow(id);
+        if(!todo.getUser().getId().equals(userId)){
+            throw new InvalidAccessException("userId가 일치하지 않습니다.");
         }
-        if (todo.getUserId() == null) {
-            throw new InvalidInputException("Does not exist id = " + id);
-        }
-
-        if (!todo.getPassword().equals(password) || !todo.getUserId().equals(userId)) {
-            throw new InvalidAccessException("user_id, password not matched");
-        }
-
-        toDoRepository.deleteToDo(id);
-
-    }
-
-    private boolean contentsLimit(String contents) {
-        return (contents.length() < 200);
+        toDoRepository.delete(todo);
+        return new ToDoListDeleteResponseDto(todo.getTitle());
     }
 
 }

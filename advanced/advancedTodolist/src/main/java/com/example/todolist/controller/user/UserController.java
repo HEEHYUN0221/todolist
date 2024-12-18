@@ -1,23 +1,24 @@
 package com.example.todolist.controller.user;
 
+import com.example.todolist.common.Const;
+import com.example.todolist.common.session.LoginUserSession;
 import com.example.todolist.dto.user.request.UserCreateRequestDto;
 import com.example.todolist.dto.user.request.UserUpdateRequestDto;
-import com.example.todolist.dto.user.response.UserCreateResponseDto;
-import com.example.todolist.dto.user.response.UserFindResponseDto;
+import com.example.todolist.dto.user.response.*;
 import com.example.todolist.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     //유저 생성
     @PostMapping
@@ -31,18 +32,36 @@ public class UserController {
         return new ResponseEntity<>(userService.findUser(userId), HttpStatus.OK);
     }
 
-    //유저 수정(이름, 이메일 정도?)
-    @PatchMapping("/{userId}")
-    public ResponseEntity<UserFindResponseDto> updateUser(@PathVariable Long userId, @RequestBody UserUpdateRequestDto requestDto) {
-        return new ResponseEntity<>(userService.updateUser(userId, requestDto), HttpStatus.OK);
+    //유저 수정(이름, 이메일)
+    @PatchMapping("/my-info/modify")
+    public ResponseEntity<UserUpdateResponseDto> updateUser(@RequestBody UserUpdateRequestDto requestDto, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        LoginUserSession user = (LoginUserSession) session.getAttribute(Const.LOGIN_USER);
+
+        return new ResponseEntity<>(userService.updateUser(user.getUser().getId(), requestDto), HttpStatus.OK);
     }
 
 
     //유저 삭제
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @DeleteMapping("/my-info/delete")
+    public ResponseEntity<UserDeleteResponseDto> deleteUser(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        LoginUserSession user = (LoginUserSession) session.getAttribute(Const.LOGIN_USER);
+
+        UserDeleteResponseDto deleteUser = userService.deleteUser(user.getUser().getId());
+
+        session.invalidate();
+
+        return new ResponseEntity<>(deleteUser,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/my-info/withdrawal")
+    public ResponseEntity<UserWithdrawalResponseDto> withdrawalUser(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        LoginUserSession user = (LoginUserSession) session.getAttribute(Const.LOGIN_USER);
+
+        return new ResponseEntity<>(userService.withdrawalUser(user.getUser().getId()),HttpStatus.OK);
     }
 
 
